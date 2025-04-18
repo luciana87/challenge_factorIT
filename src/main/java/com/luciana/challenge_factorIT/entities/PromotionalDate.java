@@ -1,24 +1,24 @@
 package com.luciana.challenge_factorIT.entities;
 
 import jakarta.persistence.*;
-import net.bytebuddy.asm.Advice;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class PromotionalDates {
+@Table(name = "promotional_dates")
+public class PromotionalDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "started_at", nullable = false)
     private LocalDateTime startedAt;
-    @Column(name = "endeded_at", nullable = false)
+    @Column(name = "ended_at", nullable = false)
     private LocalDateTime endedAt;
 
-    public PromotionalDates() {
+    public PromotionalDate() {
     }
 
-    public PromotionalDates(LocalDateTime startedAt, LocalDateTime endedAt) {
+    public PromotionalDate(LocalDateTime startedAt, LocalDateTime endedAt) {
         this.startedAt = startedAt;
         this.endedAt = endedAt;
     }

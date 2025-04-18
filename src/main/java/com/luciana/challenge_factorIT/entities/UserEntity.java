@@ -1,15 +1,15 @@
-package Entities;
+package com.luciana.challenge_factorIT.entities;
 
-import Enums.Role;
+import com.luciana.challenge_factorIT.enums.Role;
 import jakarta.persistence.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User {
+@Table (name= "users")
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,16 +26,17 @@ public class User {
     private boolean deleted;
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
     @OneToMany(mappedBy = "user")
-    private List<Cart> listCart = new ArrayList<>();
-
-    public User() {
+    private List<Cart> listCart;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Vip vip;
+    public UserEntity() {
     }
 
-    public User(String name, String surname, String dni, String username, String password, Role role, List<Cart> listCart) {
+    public UserEntity(String name, String surname, String dni, String username, String password, Role role, List<Cart> listCart, Vip vip) {
         this.name = name;
         this.surname = surname;
         this.dni = dni;
@@ -45,7 +46,8 @@ public class User {
         this.deleted = false;
         this.deletedAt = null;
         this.role = role;
-        this.listCart = listCart;
+        this.listCart = (listCart != null) ? listCart : new ArrayList<>();
+        this.vip = vip;
     }
 
     public Long getId() {
@@ -133,5 +135,13 @@ public class User {
 
     public void setListCart(List<Cart> listCart) {
         this.listCart = listCart;
+    }
+
+    public Vip getVip() {
+        return vip;
+    }
+
+    public void setVip(Vip vip) {
+        this.vip = vip;
     }
 }
