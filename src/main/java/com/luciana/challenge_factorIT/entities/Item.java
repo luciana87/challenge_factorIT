@@ -8,7 +8,10 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double amount;
+    @Column(nullable = false)
+    private double price;
+    @Column(nullable = false)
+    private int amount;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
@@ -19,7 +22,8 @@ public class Item {
     public Item() {
     }
 
-    public Item(double amount, Product product, Cart cart) {
+    public Item(double price, int amount, Product product, Cart cart) {
+        this.price = price;
         this.amount = amount;
         this.product = product;
         this.cart = cart;
@@ -29,11 +33,19 @@ public class Item {
         return id;
     }
 
-    public double getAmount() {
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

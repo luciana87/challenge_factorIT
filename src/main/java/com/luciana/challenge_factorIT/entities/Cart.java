@@ -13,7 +13,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private double total;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -21,6 +21,7 @@ public class Cart {
     @Column(name = "cart_type")
     private CartType type;
     private boolean confirmed;
+    private boolean deleted;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
@@ -37,6 +38,7 @@ public class Cart {
         this.createdAt = (createdAt != null) ? createdAt : LocalDateTime.now();
         this.type = type;
         this.confirmed = false;
+        this.deleted = false;
         this.listItems = new ArrayList<>();
         //this.listItems = (listItems != null) ? listItems : new ArrayList<>();
     }
@@ -48,6 +50,10 @@ public class Cart {
 
     public double getTotal() {
         return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -75,6 +81,14 @@ public class Cart {
 
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public List<Item> getListItems() {

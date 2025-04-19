@@ -29,7 +29,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)
     private List<Cart> listCart;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Vip vip;
