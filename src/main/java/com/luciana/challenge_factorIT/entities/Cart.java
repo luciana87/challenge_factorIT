@@ -30,14 +30,17 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(double total, UserEntity user, CartType type, boolean confirmed, List<Item> listItems) {
-        this.total = total;
+    public Cart( UserEntity user, LocalDateTime createdAt, CartType type) {
+        this.total = 0;
         this.createdAt = LocalDateTime.now();
         this.user = user;
+        this.createdAt = (createdAt != null) ? createdAt : LocalDateTime.now();
         this.type = type;
-        this.confirmed = confirmed;
-        this.listItems = (listItems != null) ? listItems : new ArrayList<>();
+        this.confirmed = false;
+        this.listItems = new ArrayList<>();
+        //this.listItems = (listItems != null) ? listItems : new ArrayList<>();
     }
+
 
     public Long getId() {
         return id;
