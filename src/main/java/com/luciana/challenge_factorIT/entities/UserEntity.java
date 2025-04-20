@@ -144,4 +144,5 @@ public class UserEntity {
     public void setVip(Vip vip) {
         this.vip = vip;
     }
+
 }
