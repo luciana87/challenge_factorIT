@@ -23,6 +23,7 @@ public class UserController {
         this.vipService = vipService;
     }
     @GetMapping("/vip")
+
     public ResponseEntity<List<UserResponseDTO>> getVipUsers() {
         try {
             List<UserResponseDTO> users = userService.getVipsUsers();

@@ -6,10 +6,12 @@ import com.luciana.challenge_factorIT.dtos.requests.ItemRequestDTO;
 import com.luciana.challenge_factorIT.dtos.requests.ModifyItemRequestDTO;
 import com.luciana.challenge_factorIT.dtos.responses.CartDetailResponseDTO;
 import com.luciana.challenge_factorIT.services.CartService;
+import com.luciana.challenge_factorIT.services.UserAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 import com.luciana.challenge_factorIT.dtos.responses.CartResponseDTO;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,9 +21,11 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping(value = "/cart")
 public class CartController {
     private final CartService cartService;
+    private final UserAuthService userAuthService;
 
-    public CartController(CartService cartService) {
+    public CartController(CartService cartService, UserAuthService userAuthService) {
         this.cartService = cartService;
+        this.userAuthService = userAuthService;
     }
 
     @PostMapping("/create")
@@ -32,7 +36,8 @@ public class CartController {
     public ResponseEntity<CartResponseDTO> createCart (@RequestBody @Valid CartRequestDTO cartRequestDTO) {
         CartResponseDTO response = new CartResponseDTO();
         try {
-            response = cartService.createCart(cartRequestDTO.getUserId(), cartRequestDTO.getCreatedAt());
+            Long userId = userAuthService.getRequestUserId();
+            response = cartService.createCart(userId, cartRequestDTO.getCreatedAt());
             return new ResponseEntity<CartResponseDTO>(response, HttpStatus.CREATED);
 
         } catch (Exception e) {
@@ -51,20 +56,26 @@ public class CartController {
     )
     public ResponseEntity<String> addItemToCart (@PathVariable Long cartId, @RequestBody @Valid ItemRequestDTO itemRequestDTO) {
         try {
-            cartService.addItemToCart(cartId, itemRequestDTO);
+            Long userId = userAuthService.getRequestUserId();
+            cartService.addItemToCart(cartId, itemRequestDTO, userId);
             return new ResponseEntity<String>("Se agregó un item al carrito", HttpStatus.CREATED);
+        } catch (AccessDeniedException e) {
+            return new ResponseEntity<String>("Error al agregar un item al carrito. El usuario no tiene permisos para acceder o modificar este recurso.", HttpStatus.FORBIDDEN);
         } catch (Exception e) {
-            return new ResponseEntity<String>("Error al agregar un item al carrito.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>("Error al agregar un item al carrito." + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{cartId}/total")
     public ResponseEntity<Double> getTotalToCart (@PathVariable Long cartId) {
         try {
-            double total = cartService.getCartTotal(cartId);
+            Long userId = userAuthService.getRequestUserId();
+            double total = cartService.getCartTotal(cartId, userId);
             return new ResponseEntity<Double>(total, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(null, e.getStatusCode());
+        }  catch (AccessDeniedException e) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -78,10 +89,13 @@ public class CartController {
     )
     public ResponseEntity<String> deleteItemFromCart (@PathVariable Long cartId, @PathVariable Long itemId) {
         try {
-            cartService.deleteItemFromCart(cartId, itemId);
+            Long userId = userAuthService.getRequestUserId();
+            cartService.deleteItemFromCart(cartId, itemId, userId);
             return new ResponseEntity<String>("Item eliminado correctamente", HttpStatus.NO_CONTENT);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getReason(), e.getStatusCode());
+        } catch (AccessDeniedException e) {
+            return new ResponseEntity<String>("Error al eliminar un item al carrito. El usuario no tiene permisos para acceder o modificar este recurso.", HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             return new ResponseEntity<String>("Error al eliminar un item del carrito.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -95,10 +109,13 @@ public class CartController {
     )
     public ResponseEntity<String> modifyItemFromCart (@PathVariable @Valid Long cartId, @PathVariable @Valid Long itemId, @RequestBody @Valid ModifyItemRequestDTO requestDTO) {
         try {
-            cartService.modifyItemFromCart(cartId, itemId, requestDTO);
+            Long userId = userAuthService.getRequestUserId();
+            cartService.modifyItemFromCart(cartId, itemId, requestDTO, userId);
             return new ResponseEntity<String>("Item modificado correctamente", HttpStatus.NO_CONTENT);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getReason(), e.getStatusCode());
+        } catch (AccessDeniedException e) {
+            return new ResponseEntity<String>("Error al modificar un item del carrito. El usuario no tiene permisos para acceder o modificar este recurso.", HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             return new ResponseEntity<String>("Error al modificar un item del carrito.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -112,10 +129,14 @@ public class CartController {
     )
     public ResponseEntity<String> checkoutCart (@PathVariable @Valid Long cartId) {
         try {
-            cartService.checkoutCart(cartId);
+            Long userId = userAuthService.getRequestUserId();
+            cartService.checkoutCart(cartId, userId);
             return new ResponseEntity<String>("Compra finalizada correctamente", HttpStatus.NO_CONTENT);
         } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
+            String msj = "No se pudo agregar el ítem: " + e.getReason();
+            return new ResponseEntity<>(msj, e.getStatusCode());
+        } catch (AccessDeniedException e) {
+            return new ResponseEntity<String>("Error al finalizar una compra. El usuario no tiene permisos para acceder o modificar este recurso.", HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             return new ResponseEntity<String>("Error al finalizar una compra.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -129,10 +150,14 @@ public class CartController {
     )
     public ResponseEntity<String> deleteCart(@PathVariable Long cartId) {
         try {
-            cartService.deleteCart(cartId);
+            Long userId = userAuthService.getRequestUserId();
+            cartService.deleteCart(cartId, userId);
             return new ResponseEntity<>("Carrito eliminado correctamente", HttpStatus.NO_CONTENT);
         } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
+            String msj = "No se pudo eliminar el carrito: " + e.getReason();
+            return new ResponseEntity<>(msj, e.getStatusCode());
+        } catch (AccessDeniedException e) {
+            return new ResponseEntity<String>("Error al eliminar el carrito. El usuario no tiene permisos para acceder o modificar este recurso.", HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al eliminar el carrito.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -146,13 +171,15 @@ public class CartController {
     )
     public ResponseEntity<CartDetailResponseDTO> getCart(@PathVariable Long cartId) {
         try {
-            CartDetailResponseDTO cartDetail = cartService.getDetailCart(cartId);
+            Long userId = userAuthService.getRequestUserId();
+            CartDetailResponseDTO cartDetail = cartService.getDetailCart(cartId, userId);
             return new ResponseEntity<>(cartDetail, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(null, e.getStatusCode());
+        } catch (AccessDeniedException e) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

@@ -13,6 +13,7 @@ import com.luciana.challenge_factorIT.enums.Role;
 import com.luciana.challenge_factorIT.repositories.CartRepository;
 import com.luciana.challenge_factorIT.utils.Utils;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -50,23 +51,27 @@ public class CartService {
         return new CartResponseDTO(cart.getId(), "CREADO", "Carrito creado exitosamente.");
     }
     @Transactional
-    public void addItemToCart(Long cartId, ItemRequestDTO itemRequestDTO) {
+    public void addItemToCart(Long cartId, ItemRequestDTO itemRequestDTO, Long userId) {
         Cart cart = getCart(cartId);
+        validateUser(cart.getUser().getId(), userId);
         itemService.addItem(cart, itemRequestDTO);
     }
     @Transactional
-    public void deleteItemFromCart(Long cartId, Long itemId) {
+    public void deleteItemFromCart(Long cartId, Long itemId, Long userId) {
         Cart cart = getCart(cartId);
+        validateUser(cart.getUser().getId(), userId);
         itemService.deleteItem(itemId, cart);
     }
     @Transactional
-    public void modifyItemFromCart(Long cartId, Long itemId, ModifyItemRequestDTO requestDTO) {
+    public void modifyItemFromCart(Long cartId, Long itemId, ModifyItemRequestDTO requestDTO, Long userId) {
         Cart cart = getCart(cartId);
+        validateUser(cart.getUser().getId(), userId);
         itemService.modifyItem(itemId, cart, requestDTO);
     }
     @Transactional
-    public void checkoutCart(Long cartId) {
+    public void checkoutCart(Long cartId, Long userId) {
         Cart cart = getCart(cartId);
+        validateUser(cart.getUser().getId(), userId);
         if (cart.isConfirmed()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El carrito ya fue confirmado.");
         }
@@ -76,8 +81,9 @@ public class CartService {
         cartRepository.save(cart);
     }
     @Transactional
-    public void deleteCart(Long cartId) {
+    public void deleteCart(Long cartId, Long userId) {
         Cart cart = getCart(cartId);
+        validateUser(cart.getUser().getId(), userId);
         if (cart.isDeleted()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El carrito ya está eliminado.");
         }
@@ -85,9 +91,11 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public CartDetailResponseDTO getDetailCart(Long cartId) {
+    public CartDetailResponseDTO getDetailCart(Long cartId, Long userId) {
 
         Cart cart = getCart(cartId);
+        validateUser(cart.getUser().getId(), userId);
+
         List<Item> items =  itemService.getItems(cart.getId());
         int totalProducts = items.stream().mapToInt(Item::getAmount).sum();
 
@@ -97,6 +105,13 @@ public class CartService {
 
         return mapToDTO(cart, items, totalProducts);
     }
+
+    private void validateUser(Long cartId, Long userId) {
+        if (userId != cartId) {
+            throw new AccessDeniedException("You do not have permission to access this resource.");
+        }
+    }
+
     private CartDetailResponseDTO mapToDTO(Cart cart, List<Item> items, int totalProducts) {
         List<ItemResponseDTO> itemDTOs = items.stream()
                 .map(item -> new ItemResponseDTO(
@@ -119,8 +134,9 @@ public class CartService {
         double total = calculateTotal(cart, items);
         cart.setTotal(total);
     }
-    public double getCartTotal(Long cartId) {
+    public double getCartTotal(Long cartId, Long userId) {
         Cart cart = getCart(cartId);
+        validateUser(cart.getUser().getId(), userId);
         List<Item> items =  itemService.getItems(cart.getId());
 
         return calculateTotal(cart, items);

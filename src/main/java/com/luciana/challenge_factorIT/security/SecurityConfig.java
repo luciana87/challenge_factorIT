@@ -4,6 +4,7 @@ import com.luciana.challenge_factorIT.entities.UserEntity;
 import com.luciana.challenge_factorIT.enums.Role;
 import com.luciana.challenge_factorIT.repositories.UserRepository;
 import com.luciana.challenge_factorIT.security.jwt.JwtAuthFilter;
+import com.luciana.challenge_factorIT.services.UserAuthService;
 import com.luciana.challenge_factorIT.services.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -22,22 +23,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final UserService userService;
-    private final JwtAuthFilter jwtAuthFilter;
-
-    public SecurityConfig(UserService userService, JwtAuthFilter jwtAuthFilter) {
-        this.userService = userService;
-        this.jwtAuthFilter = jwtAuthFilter;
-    }
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Rutas públicas
                         .requestMatchers("/carts/**").authenticated()  // Rutas privadas
+                        .requestMatchers("/user/**").hasRole("ADMIN")
                         .anyRequest().authenticated()  // Otras rutas requieren autenticación
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -45,10 +39,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder,
+                                                       UserAuthService userAuthService) throws Exception {
         AuthenticationManagerBuilder auth = http.getSharedObject(AuthenticationManagerBuilder.class);
         auth
-                .userDetailsService(userService)
+                .userDetailsService(userAuthService)
                 .passwordEncoder(passwordEncoder);
         return auth.build();
     }
