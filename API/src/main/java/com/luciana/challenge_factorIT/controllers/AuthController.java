@@ -20,7 +20,6 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login (@RequestBody AuthRequestDTO requestDTO) {
         Authentication auth = authenticationManager.authenticate(

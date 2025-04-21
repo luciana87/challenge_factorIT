@@ -26,7 +26,7 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
         console.log('Login exitoso', response)
-        localStorage.setItem('jwt', response.token)  
+        localStorage.setItem('token', response.token)  
         this.router.navigate(['/home'])      
       },
       (error) => {
