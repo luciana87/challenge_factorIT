@@ -10,17 +10,27 @@ public class CartDetailResponseDTO {
     private double total;
     private int totalProducts;
     private boolean deleted;
+    private boolean confirmed;
     private List<ItemResponseDTO> itemsDTO;
 
     public CartDetailResponseDTO() {
     }
 
-    public CartDetailResponseDTO(Long id, double total, int totalProducts, boolean deleted, List<ItemResponseDTO> itemsDTO) {
+    public CartDetailResponseDTO(Long id, double total, int totalProducts, boolean deleted, boolean confirmed, List<ItemResponseDTO> itemsDTO) {
         this.id = id;
         this.total = total;
         this.totalProducts = totalProducts;
         this.deleted = deleted;
+        this.confirmed = confirmed;
         this.itemsDTO = itemsDTO;
+    }
+
+    public CartDetailResponseDTO(Long id, double total, int totalProducts, boolean deleted, boolean confirmed) {
+        this.id = id;
+        this.total = total;
+        this.totalProducts = totalProducts;
+        this.deleted = deleted;
+        this.confirmed = confirmed;
     }
 
     public Long getId() {

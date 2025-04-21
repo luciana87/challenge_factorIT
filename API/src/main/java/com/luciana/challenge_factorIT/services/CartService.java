@@ -126,6 +126,7 @@ public class CartService {
                 cart.getTotal(),
                 totalProducts,
                 cart.isDeleted(),
+                cart.isConfirmed(),
                 itemDTOs
         );
     }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { Product, ProductService } from '../services/product.service';
+
 import { CommonModule } from '@angular/common';
 import { BooleanToSiNoPipe } from '../../pipes/boolean-to-si-no.pipe';
+import { Product } from '../../models/Product';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-products',

@@ -1,0 +1,26 @@
+<h2>Carrito #{{ cart.id }}</h2>
+<p>Total productos: {{ cart.totalProducts }}</p>
+<p>Total: ${{ cart.total }}</p>
+<p>Eliminado: {{ cart.deleted ? 'Sí' : 'No' }}</p>
+<p>Confirmado: {{ cart.confirmed ? 'Sí' : 'No' }}</p>
+
+<h3>Items en el carrito</h3>
+<table >
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Precio Unit</th>            
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of cart.itemsDTO">
+            <td>{{ item.id }}</td>
+            <td>{{ item.productName }}</td>
+            <td>{{ item.amount }}</td>
+            <td>${{ item.unitPrice }}</td>            
+        </tr>
+    </tbody>
+</table>
+
