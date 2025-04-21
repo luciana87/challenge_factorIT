@@ -12,7 +12,7 @@ export interface CartRequest {
 })
 
 export class CartService {
-    private apiUrl = 'http://localhost:8080/cart/create'
+    private readonly apiUrl = 'http://localhost:8080/cart/create'
 
     constructor(private http: HttpClient) {}
     

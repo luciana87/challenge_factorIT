@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { formatDateTime } from '../../../utils/functions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-cart',
@@ -11,7 +12,7 @@ import { formatDateTime } from '../../../utils/functions';
 })
 export class CreateCartComponent {
 
-  constructor(private cartService: CartService){}
+  constructor(private cartService: CartService, private router: Router){}
 
   createCart() {
     const createdAt = formatDateTime(new Date())
@@ -21,6 +22,7 @@ export class CreateCartComponent {
       next: (response) => {
         console.log('Carrito creado: ', response)
         //Redirigir a la lista de productos supongo
+        this.router.navigate(['/products']) 
         
       },
       error: (error) => {
