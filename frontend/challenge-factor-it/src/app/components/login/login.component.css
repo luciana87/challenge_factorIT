@@ -1,0 +1,21 @@
+#div-bg {
+    /* background-color: rgb(204, 180, 236, 0.6); */
+    background-color: rgb(219, 227, 250);
+    /* background-color: white; */
+    /* background-color: rgb(235, 240, 253); */
+    border-radius: 1rem;
+    /* box-shadow: 10px 10px 5px rgb(151, 153, 153); */
+    transition: transform 0.7s ease;
+}
+
+#div-bg:hover {
+    transform: scale(1.05);
+}
+
+.button-login {
+    background-color: #6b6bff;
+}
+
+.button-login:hover {
+    background-color: #4545e8;
+}

@@ -1,0 +1,42 @@
+<div id="div-bg" class=" container w-75">
+    <div class="row p-xl-5">
+        <!-- <div class="col-md-6">
+            <img src="../../../assets/img/logo4.png" alt="Image" class="img-fluid">
+        </div> -->
+        <div class="col-md-6 ">
+            <div class="row justify-content-center ">
+                <div class="col-md-8">
+                    <div class=" mb-4">
+                        <h3>Bienvenido</h3>
+                        <p class="mb-4">¡Hola de nuevo! Inicia sesión para ingresar.</p>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-group ">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" required [(ngModel)]="username">
+                        </div>
+                        <div *ngIf="!username" class="text-danger">
+                            <small>Correo es requerido.</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" required [(ngModel)]="password"
+                                (keyup.enter)="onLogin()">
+                        </div>
+                        <div *ngIf="!username" class="text-danger">
+                            <small>Correo es requerido.</small>
+                        </div>
+                    </div>
+
+                    <button (click)="onLogin()" value="Log In"
+                        class="button-login btn text-center text-white">Ingresar</button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
