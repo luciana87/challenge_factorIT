@@ -73,30 +73,31 @@ A continuación se indican las instrucciones para ejecutar los scripts SQL de ca
 
    Se insertaran usuarios a la base de datos.
 
-      - **Usuarios ADMIN:**
-         **username:** admin1
-         **password:** admin1
+- **Usuarios ADMIN:**  
+  **username:** admin1  
+  **password:** admin1  
 
-         Usuario de prueba security:
-         **username:** admin123
-         **password:** admin123
+  Usuario de prueba security:  
+  **username:** admin123  
+  **password:** admin123  
 
-      - **Usuarios VIP:**
-         **username:** uservip
-         **password:** uservip
+- **Usuarios VIP:**  
+  **username:** uservip  
+  **password:** uservip  
 
-         **username:** uservip1
-         **password:** uservip1
+  **username:** uservip1  
+  **password:** uservip1  
 
-      - **Usuarios COMMON:**
-         **username:** user1
-         **password:** user1
+- **Usuarios COMMON:**  
+  **username:** user1  
+  **password:** user1  
 
-         **username:** user2
-         **password:** user2
+  **username:** user2  
+  **password:** user2  
 
-         **username:** user3
-         **password:** user3
+  **username:** user3  
+  **password:** user3  
+
 
 4. **Ejecutar el script llamado `scrpt_challenge.sql`**:
 
