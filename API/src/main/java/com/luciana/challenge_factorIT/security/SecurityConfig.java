@@ -76,14 +76,14 @@ public class SecurityConfig {
     @Bean
     CommandLineRunner init(UserRepository userRepository, PasswordEncoder encoder) {
         return args -> {
-            if (!userRepository.existsByUsername("admin")) {
+            if (!userRepository.existsByUsername("admin123")) {
                 UserEntity user = new UserEntity();
-                user.setName("Luciana");
+                user.setName("Admin123");
                 user.setSurname("Chaparro");
-                user.setDni("12345678");
-                user.setUsername("admin");
+                user.setDni("31333333");
+                user.setUsername("admin123");
                 user.setPassword(encoder.encode("123456"));
-                user.setRole(Role.COMMON);
+                user.setRole(Role.ADMIN);
                 userRepository.save(user);
             }
         };

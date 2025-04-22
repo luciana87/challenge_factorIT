@@ -1,0 +1,27 @@
+table th {
+    background-color: #bfbfd0d3;
+    color: black;
+    font-weight: 600;
+}
+
+.button-circle-detail {
+    background-color:  #949694d3;
+}
+.button-circle-detail:hover {
+    background-color: #d1d3d1d3;
+}
+
+.button-circle-add {
+    background-color: rgba(67, 200, 125, 0.999);
+}
+.button-circle-add:hover {
+    background-color: #acb7acd3;
+}
+
+.button-circle-delete {
+    background-color: rgb(239, 88, 88);
+}
+
+.button-circle-activate {
+    background-color: rgb(79, 114, 255);
+}

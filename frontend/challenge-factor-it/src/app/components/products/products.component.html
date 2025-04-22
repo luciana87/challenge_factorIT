@@ -1,6 +1,86 @@
 <h2>LISTADO DE PRODUCTOS</h2>
-<ul>
+<!-- <ul>
     <li *ngFor="let product of products">
         {{ product.name }} - ${{ product.price }}- Categoría: {{ product.category }}- Producto eliminado: {{ product.deleted | booleanToSiNo }}
     </li>
-</ul>
+</ul> -->
+<div class="container w-100 mt-4">
+
+    <section class="w-100">
+        <h3 class="row mb-3 h3"
+            style="font-family: 'Roboto', sans-serif; color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px;">
+            Carrito: {{cartId}} Productos</h3>
+        <!-- <div class="row">
+            <div class="col-md-2 d-flex align-items-center">
+                <div class="form-check form-switch">
+                    <label class="col- form-check-label" for="switch">Ver eliminados</label>
+                    <input class="col- form-check-input" type="checkbox" id="switch" [(ngModel)]="showDeleted"
+                        (change)="filterByDeleted()">
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <label class="col-3" for="search">Buscar:</label>
+                <input class="col-9 custom-input" [(ngModel)]="input_search" type="text" name="search" id="search"
+                    placeholder="Buscar por nombre ó sku...">
+            </div>
+
+            <div class="col-md-5 d-flex align-items-center">
+                <label class="col-4" for="category">Filtrar por categoría:</label>
+                <select class="col-6" [(ngModel)]="category" name="category" id="category">
+                    <option [ngValue]="nullCategory" selected>Mostrar todos</option>
+                    <option *ngFor="let category of uniqueCategories" [ngValue]="category">{{category.name}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex justify-content-end">
+                <button class="button-add btn text-center btn-sm text-white" routerLink="create" data-toggle="tooltip"
+                    data-placement="top" title="Agregar producto">
+                    Agregar <i class="fa-solid fa-plus fa-sm"></i>
+                </button>
+            </div>
+        </div> -->
+
+
+        <table class="table mt-3 border">
+            <thead class="row-12 align-middle ">
+                <tr>
+                    <th class="col-3">Nombre</th>
+                    <th class="col-2">Categoría</th>
+                    <th class="col-1">Descripcion</th>
+                    <th class="col-1">Precio</th>
+                    <th class="col-2">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products"
+                    id="product-table-container" class="row-12 align-middle">
+            
+                    <td class="col-3" class="border-bottom"> {{product.name}}</td>
+                    <td class="col-2 border-bottom py-2">{{ product.category }}</td>
+                    <td class="col-2 border-bottom">{{ product.description }}</td>
+                    <td class="col-1 border-bottom">{{ product.price | currency: '$'}}</td>
+                    <td class="col-2 border-bottom">
+                        <button class="col-2 btn text-white me-2 btn-sm button-circle button-circle-edit"
+                            id="edit-button{{ product.id }}" routerLink="/cart/{{cartId}}/products/{{product.id}}/add" data-toggle="tooltip"
+                            data-placement="top" title="Agregar"><i class=" fas fa-plus"></i></button>
+                        <!-- 
+                        <button class="col-2 btn text-white me-2 btn-sm button-circle button-circle-edit"
+                            id="edit-button{{ product.id }}" routerLink="/cart/{{cartId}}/products/{{product.id}}/add" data-toggle="tooltip"
+                            data-placement="top" title="Agregar"><i
+                                class="fa-regular fa-pen-to-square fa-sm d-flex  align-content-center justify-content-center "></i></button>        
+                        <button *ngIf="!showDeleted"
+                            class="btn text-white me-2 btn-sm button-circle button-circle-delete" data-toggle="tooltip"
+                            data-placement="top" title="Eliminar" (click)="delete(product)"><i
+                                class="fa-regular fa-trash-can fa-sm d-flex  align-content-center justify-content-center"></i></button>
+                        <button *ngIf="showDeleted" class="btn button-circle me-2 btn-sm button-circle-activate"
+                            data-toggle="tooltip" data-placement="top" title="Activar"
+                            (click)="activateProduct(product)"><i
+                                class="fa-regular fa-square-check fa-sm d-flex align-content-center justify-content-center"></i></button>
+                    </td> -->
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+</div>

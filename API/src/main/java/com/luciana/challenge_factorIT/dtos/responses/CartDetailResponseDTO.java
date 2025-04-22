@@ -61,6 +61,14 @@ public class CartDetailResponseDTO {
         return deleted;
     }
 
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }

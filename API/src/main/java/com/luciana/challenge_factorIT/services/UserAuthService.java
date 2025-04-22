@@ -1,6 +1,7 @@
 package com.luciana.challenge_factorIT.services;
 
 import com.luciana.challenge_factorIT.entities.UserEntity;
+import com.luciana.challenge_factorIT.enums.Role;
 import com.luciana.challenge_factorIT.repositories.UserRepository;
 import com.luciana.challenge_factorIT.security.UserDetailsImpl;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,6 +36,16 @@ public class UserAuthService implements UserDetailsService {
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             return ((UserDetailsImpl) userDetails).getUserId();
+        } else {
+            throw new BadCredentialsException("User not authenticated");
+        }
+    }
+
+    public Role getRequestRole() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return ((UserDetailsImpl) userDetails).getRole();
         } else {
             throw new BadCredentialsException("User not authenticated");
         }

@@ -54,15 +54,23 @@ public class CartController {
                     "Se espera recibir un objeto de tipo `ItemRequestDTO` con la información necesaria para su creación. " +
                     "El carrito será actualizado con el nuevo item y se devolverá una respuesta de éxito si la operación fue realizada correctamente."
     )
-    public ResponseEntity<String> addItemToCart (@PathVariable Long cartId, @RequestBody @Valid ItemRequestDTO itemRequestDTO) {
+    public ResponseEntity<CartResponseDTO> addItemToCart (@PathVariable Long cartId, @RequestBody @Valid ItemRequestDTO itemRequestDTO) {
+        CartResponseDTO responseDTO = new CartResponseDTO();
+        responseDTO.setCartId(cartId);
         try {
             Long userId = userAuthService.getRequestUserId();
             cartService.addItemToCart(cartId, itemRequestDTO, userId);
-            return new ResponseEntity<String>("Se agregó un item al carrito", HttpStatus.CREATED);
+            responseDTO.setMessage("Se agregó un item al carrito");
+            return new ResponseEntity<CartResponseDTO>(responseDTO, HttpStatus.CREATED);
         } catch (AccessDeniedException e) {
-            return new ResponseEntity<String>("Error al agregar un item al carrito. El usuario no tiene permisos para acceder o modificar este recurso.", HttpStatus.FORBIDDEN);
+            responseDTO.setMessage("Error al agregar un item al carrito. El usuario no tiene permisos para acceder o modificar este recurso.");
+            return new ResponseEntity<CartResponseDTO>(responseDTO, HttpStatus.FORBIDDEN);
+        } catch (ResponseStatusException e) {
+            responseDTO.setMessage(e.getReason());
+            return new ResponseEntity<CartResponseDTO>(responseDTO, e.getStatusCode());
         } catch (Exception e) {
-            return new ResponseEntity<String>("Error al agregar un item al carrito." + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            responseDTO.setMessage("Error al agregar un item al carrito." + e.getMessage());
+            return new ResponseEntity<CartResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -133,7 +141,7 @@ public class CartController {
             cartService.checkoutCart(cartId, userId);
             return new ResponseEntity<String>("Compra finalizada correctamente", HttpStatus.NO_CONTENT);
         } catch (ResponseStatusException e) {
-            String msj = "No se pudo agregar el ítem: " + e.getReason();
+            String msj = "No se pudo confirmar la compra: " + e.getReason();
             return new ResponseEntity<>(msj, e.getStatusCode());
         } catch (AccessDeniedException e) {
             return new ResponseEntity<String>("Error al finalizar una compra. El usuario no tiene permisos para acceder o modificar este recurso.", HttpStatus.FORBIDDEN);

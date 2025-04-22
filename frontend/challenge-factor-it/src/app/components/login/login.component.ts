@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  @Output() loginSuccess = new EventEmitter<void>();
 
   username: string = ''
   password: string = ''

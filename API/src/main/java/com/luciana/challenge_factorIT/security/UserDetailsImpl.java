@@ -1,6 +1,7 @@
 package com.luciana.challenge_factorIT.security;
 
 import com.luciana.challenge_factorIT.entities.UserEntity;
+import com.luciana.challenge_factorIT.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,9 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getName(){
         return user.getName();
+    }
+    public Role getRole () {
+        return user.getRole();
     }
 
     @Override
