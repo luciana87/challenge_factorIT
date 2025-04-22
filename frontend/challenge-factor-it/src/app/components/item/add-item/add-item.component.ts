@@ -12,7 +12,7 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './add-item.component.css'
 })
 export class AddItemComponent {
-  cantidad: number = 0
+  amount: number = 0
   productId: number = 0
   cartId: number = 0
 
@@ -40,7 +40,7 @@ export class AddItemComponent {
   }
 
   public onSubmit(){
-    this.cartService.addItemToCart(this.cartId,{ product_id: this.productId, amount: this.cantidad}).subscribe({
+    this.cartService.addItemToCart(this.cartId,{ product_id: this.productId, amount: this.amount}).subscribe({
       next: (response) => {
         console.log('Item creado: ', response) 
         this.router.navigate([`/cart/${this.cartId}`]) 

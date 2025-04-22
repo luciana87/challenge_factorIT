@@ -1,27 +1,49 @@
-table th {
-    background-color: #bfbfd0d3;
-    color: black;
-    font-weight: 600;
+
+
+.cart-container {
+    padding: 5px 10px;
 }
 
-.button-circle-detail {
-    background-color:  #949694d3;
-}
-.button-circle-detail:hover {
-    background-color: #d1d3d1d3;
-}
-
-.button-circle-add {
-    background-color: rgba(67, 200, 125, 0.999);
-}
-.button-circle-add:hover {
-    background-color: #acb7acd3;
+.cart-table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.button-circle-delete {
-    background-color: rgb(239, 88, 88);
+.cart-table thead tr {
+    background-color: rgba(245, 148, 168, 0.39);
 }
 
-.button-circle-activate {
-    background-color: rgb(79, 114, 255);
+.cart-table  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.cart-table  tbody tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.cart-btns {
+    padding: 5px 10px;
+    display: flex;
+    gap: 20px
+}
+
+.delete-cart-btn {
+    background-color: rgba(245, 148, 168, 0.39);
+}
+
+.delete-cart-btn:hover {
+    background-color: rgba(119, 22, 41, 0.39);
+    box-shadow: 0px 3px 5px 0px rgba(119, 119, 119, 0.56);
+}
+
+.confirm-cart-btn {
+    background-color: rgba(10, 38, 196, 0.267);
+}
+
+.confirm-cart-btn:hover {
+    background-color: rgba(57, 74, 168, 0.555);
+    box-shadow: 0px 3px 5px 0px rgba(119, 119, 119, 0.56);
 }

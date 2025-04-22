@@ -3,15 +3,16 @@ import { ActivatedRoute, ParamMap, Router, RouterModule } from '@angular/router'
 import { CartService } from '../../services/cart.service';
 import { Item } from '../../../models/Item';
 import { Cart } from '../../../models/Cart';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../../models/Product';
 import Swal from 'sweetalert2';
+import { BooleanToSiNoPipe } from '../../../pipes/boolean-to-si-no.pipe';
 
 @Component({
   selector: 'app-get-cart',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CurrencyPipe, BooleanToSiNoPipe],
   templateUrl: './get-cart.component.html',
   styleUrl: './get-cart.component.css'
 })

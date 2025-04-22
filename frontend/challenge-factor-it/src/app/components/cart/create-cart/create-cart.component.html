@@ -1,4 +1,9 @@
-<h2>CREAR CARRITO</h2>
-<input type="datetime-local" [(ngModel)]="createdAt" name="createdAt" class="form-control" />
 
-<button (click)="createCart()">Crear carrito</button>
+
+<div class="cart-container">
+    <h3>Empezar compra</h3>
+    <div class="cart">
+        <input type="datetime-local" [(ngModel)]="createdAt" name="createdAt" />
+        <button (click)="createCart()" class="cart-btn">Empezar carrito </button>
+    </div>
+</div>
