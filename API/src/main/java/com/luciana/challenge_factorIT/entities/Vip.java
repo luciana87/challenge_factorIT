@@ -20,8 +20,12 @@ public class Vip {
     public Vip() {
     }
 
-    public Vip(LocalDateTime modifiedAt, boolean active, UserEntity user) {
-        this.modifiedAt = modifiedAt;
+    public Vip(UserEntity user) {
+        this.user = user;
+    }
+
+    public Vip (UserEntity user, boolean active) {
+        this.modifiedAt = LocalDateTime.now();
         this.active = active;
         this.user = user;
     }

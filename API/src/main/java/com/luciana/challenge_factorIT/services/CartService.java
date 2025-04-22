@@ -8,6 +8,7 @@ import com.luciana.challenge_factorIT.dtos.responses.ItemResponseDTO;
 import com.luciana.challenge_factorIT.entities.Cart;
 import com.luciana.challenge_factorIT.entities.Item;
 import com.luciana.challenge_factorIT.entities.UserEntity;
+import com.luciana.challenge_factorIT.entities.Vip;
 import com.luciana.challenge_factorIT.enums.CartType;
 import com.luciana.challenge_factorIT.enums.Role;
 import com.luciana.challenge_factorIT.repositories.CartRepository;
@@ -29,13 +30,17 @@ public class CartService {
     private final UserService userService;
     private final PromotionalDateService promotionalDateService;
     private final ItemService itemService;
+    private final VipService vipService;
 
 
-    public CartService(CartRepository cartRepository, UserService userService, PromotionalDateService promotionalDateService, ItemService itemService) {
+    public CartService(CartRepository cartRepository, UserService userService,
+                       PromotionalDateService promotionalDateService, ItemService itemService,
+                       VipService vipService) {
         this.cartRepository = cartRepository;
         this.userService = userService;
         this.promotionalDateService = promotionalDateService;
         this.itemService = itemService;
+        this.vipService = vipService;
     }
 
     @Transactional
@@ -192,7 +197,7 @@ public class CartService {
         }
         return optionalCart.get();
     }
-    @Transactional
+
     public void updateVipStatusForMonth () {
 
         YearMonth lastMonth = YearMonth.now().minusMonths(1);
@@ -202,21 +207,39 @@ public class CartService {
         List<UserEntity> users = userService.findAll();
 
         for (UserEntity user : users) {
-            List<Cart> carts = findByUserIdAndDateBetween(user.getId(), start, end);
+            List<Cart> carts = findByUserIdAndDateBetween(user.getId(), start, end); // Obtengo los carritos del mes especificado de cada usuario
 
-            double totalSpent = carts.stream()
+            double totalSpent = carts.stream()                      // Sumo el total de los carritos del mes especificado
                     .mapToDouble(cart -> cart.getTotal())
                     .sum();
 
             boolean isCurrentlyVip = user.getRole() == Role.VIP;
+            Optional<Vip> existingVip = vipService.findByUserId(user.getId());
+            Vip vip;
 
             if (totalSpent > 10000 && !isCurrentlyVip) {
                 user.setRole(Role.VIP);
+                userService.save(user);
+
+                if (existingVip.isPresent()) {
+                    vip = existingVip.get();
+                    vip.setActive(true);
+                    vip.setModifiedAt(LocalDateTime.now());
+                    vipService.save(vip);
+                } else {
+                    vipService.save(new Vip(user, true));
+                }
             } else if (carts.isEmpty() || isCurrentlyVip) {
                 user.setRole(Role.COMMON);
-            }
+                userService.save(user);
 
-            userService.save(user);
+                if (existingVip.isPresent()) {
+                    vip = existingVip.get();
+                    vip.setActive(false);
+                    vip.setModifiedAt(LocalDateTime.now());
+                    vipService.save(vip);
+                }
+            }
         }
     }
 

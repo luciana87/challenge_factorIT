@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface VipRepository extends JpaRepository<Vip, Long> {
@@ -18,4 +19,6 @@ public interface VipRepository extends JpaRepository<Vip, Long> {
     List<Vip> findVipsByMonthAndActive(@Param("active") Boolean active,
                                         @Param("month") int month,
                                         @Param("year") int year);
+
+    Optional<Vip> findByUserId(Long id);
 }

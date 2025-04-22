@@ -1,6 +1,6 @@
 package com.luciana.challenge_factorIT.controllers;
 
-import com.luciana.challenge_factorIT.dtos.responses.UserResponseDTO;
+import com.luciana.challenge_factorIT.dtos.responses.VipResponseDTO;
 import com.luciana.challenge_factorIT.entities.Vip;
 import com.luciana.challenge_factorIT.services.CartService;
 import com.luciana.challenge_factorIT.services.UserService;
@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,24 +28,27 @@ public class UserController {
    // @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/vip")
 
-    public ResponseEntity<List<UserResponseDTO>> getVipUsers() {
+    public ResponseEntity<List<VipResponseDTO>> getVipUsers() {
         try {
-            List<UserResponseDTO> users = userService.getVipsUsers();
-            return new ResponseEntity<List<UserResponseDTO>>(users, HttpStatus.OK);
+            List<VipResponseDTO> users = userService.getVipsUsers();
+            return new ResponseEntity<List<VipResponseDTO>>(users, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/vip/by-month")
-    public ResponseEntity<List<UserResponseDTO>> getVipUsersByMonth(@RequestParam @Valid boolean active,
-                                                               @RequestParam @Valid int year,
-                                                               @RequestParam @Valid int month
+    public ResponseEntity<List<VipResponseDTO>> getVipUsersByMonth(@RequestParam @Valid boolean active,
+                                                                   @RequestParam @Valid int year,
+                                                                   @RequestParam @Valid int month
     ) {
         try {
             List<Vip> vips = vipService.findByActiveAndDate(active, year, month);
-            List<UserResponseDTO> users = vips.stream().map(vip -> userService.mapToDTO(vip.getUser())).toList();
-            return new ResponseEntity<List<UserResponseDTO>>(users, HttpStatus.OK);
+            List<VipResponseDTO> users = vips.stream()
+                    .map(vip -> userService.mapToDTO(vip))
+                    .toList();
+
+            return new ResponseEntity<List<VipResponseDTO>>(users, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

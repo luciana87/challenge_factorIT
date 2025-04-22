@@ -33,7 +33,6 @@ public class Cart {
 
     public Cart( UserEntity user, LocalDateTime createdAt, CartType type) {
         this.total = 0;
-        this.createdAt = LocalDateTime.now();
         this.user = user;
         this.createdAt = (createdAt != null) ? createdAt : LocalDateTime.now();
         this.type = type;
