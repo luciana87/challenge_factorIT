@@ -36,6 +36,17 @@ public class UserEntity {
     public UserEntity() {
     }
 
+    public UserEntity(String name, String surname, String dni, String username, String password, boolean deleted, LocalDateTime deletedAt, Role role) {
+        this.name = name;
+        this.surname = surname;
+        this.dni = dni;
+        this.username = username;
+        this.password = password;
+        this.deleted = deleted;
+        this.deletedAt = deletedAt;
+        this.role = role;
+    }
+
     public UserEntity(String name, String surname, String dni, String username, String password, Role role, List<Cart> listCart, Vip vip) {
         this.name = name;
         this.surname = surname;

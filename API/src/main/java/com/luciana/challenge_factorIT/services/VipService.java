@@ -1,5 +1,6 @@
 package com.luciana.challenge_factorIT.services;
 
+import com.luciana.challenge_factorIT.entities.Cart;
 import com.luciana.challenge_factorIT.entities.Vip;
 import com.luciana.challenge_factorIT.repositories.VipRepository;
 import com.luciana.challenge_factorIT.utils.Utils;

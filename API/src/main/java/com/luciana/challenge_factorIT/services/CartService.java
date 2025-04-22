@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -149,7 +150,7 @@ public class CartService {
 
         double finalTotal = totalWithoutDiscount;
 
-        if (cart.getType() == CartType.VIP) {                            // Cliente VIP se le bonifica el producto más barato y descuenta $500
+        if (cart.getType() == CartType.VIP && amountProducts > 10) {     // Cliente VIP se le bonifica el producto más barato y descuenta $500
             double cheapestPrice = Double.MAX_VALUE;
             for (Item item : items) {
                 if (item.getPrice() < cheapestPrice) {
@@ -158,7 +159,7 @@ public class CartService {
             }
             double discount = cheapestPrice + 500.0;
             finalTotal = Math.max(0, totalWithoutDiscount - discount);  // Hace los descuentos y nunca devuelve 0
-        } else if  (cart.getType() == CartType.SPECIAL_DATE) {          // Fechas especiales descuento general de $300
+        } else if  (cart.getType() == CartType.SPECIAL_DATE && amountProducts > 10) {          // Fechas especiales descuento general de $300
             finalTotal = Math.max(0, totalWithoutDiscount - 300.0);
         } else {
             if (amountProducts == 4) {                                  // Exactamente 4 productos 25% de descuento
@@ -191,5 +192,37 @@ public class CartService {
         }
         return optionalCart.get();
     }
+    @Transactional
+    public void updateVipStatusForMonth () {
+
+        YearMonth lastMonth = YearMonth.now().minusMonths(1);
+        LocalDateTime start = lastMonth.atDay(1).atStartOfDay();
+        LocalDateTime end = lastMonth.atEndOfMonth().atTime(23, 59, 59);
+
+        List<UserEntity> users = userService.findAll();
+
+        for (UserEntity user : users) {
+            List<Cart> carts = findByUserIdAndDateBetween(user.getId(), start, end);
+
+            double totalSpent = carts.stream()
+                    .mapToDouble(cart -> cart.getTotal())
+                    .sum();
+
+            boolean isCurrentlyVip = user.getRole() == Role.VIP;
+
+            if (totalSpent > 10000 && !isCurrentlyVip) {
+                user.setRole(Role.VIP);
+            } else if (carts.isEmpty() || isCurrentlyVip) {
+                user.setRole(Role.COMMON);
+            }
+
+            userService.save(user);
+        }
+    }
+
+    private List<Cart> findByUserIdAndDateBetween(Long id, LocalDateTime start, LocalDateTime end) {
+        return cartRepository.findByUserIdAndCreatedAtBetween(id, start,end);
+    }
+
 }
 

@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -36,9 +37,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Rutas públicas
+                        .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/user/create/**","user/vip/update").permitAll()  // Rutas públicas
                         .requestMatchers("/carts/create**", "/products**", "/get-cart/**").authenticated()  // Rutas privadas
-                        .requestMatchers("/user/**").hasRole("ADMIN")
+                        .requestMatchers("/user/vip**", "/user/vip/by-month**").hasRole("ADMIN")
                         .anyRequest().authenticated()  // Otras rutas requieren autenticación
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -79,10 +80,10 @@ public class SecurityConfig {
             if (!userRepository.existsByUsername("admin123")) {
                 UserEntity user = new UserEntity();
                 user.setName("Admin123");
-                user.setSurname("Chaparro");
+                user.setSurname("Prueba");
                 user.setDni("31333333");
                 user.setUsername("admin123");
-                user.setPassword(encoder.encode("123456"));
+                user.setPassword(encoder.encode("admin123"));
                 user.setRole(Role.ADMIN);
                 userRepository.save(user);
             }
