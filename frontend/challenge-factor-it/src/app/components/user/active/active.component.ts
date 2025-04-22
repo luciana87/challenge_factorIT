@@ -5,11 +5,12 @@ import { User } from '../../../models/User';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { BooleanToSiNoPipe } from '../../../pipes/boolean-to-si-no.pipe';
 
 @Component({
   selector: 'app-active',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, BooleanToSiNoPipe],
   templateUrl: './active.component.html',
   styleUrl: './active.component.css'
 })

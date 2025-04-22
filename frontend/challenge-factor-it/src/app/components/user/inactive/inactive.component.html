@@ -8,20 +8,22 @@
     <table class="table-inactive">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Username</th> 
-                <th>Eliminado</th> 
-                <th>Rol</th>            
+                <th>Username</th>
+                <th>Fecha modificación</th>            
+                <th>Usuario eliminado</th>       
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let vip of vips">
-                <td>{{ vip.name }}</td>
-                <td>{{ vip.surname }}</td>
+                <td>{{ vip.id }}</td>
+                <td>{{ vip.userName }}</td>
+                <td>{{ vip.userSurname }}</td>
                 <td>{{ vip.username }}</td>
-                <td>{{ vip.deleted }}</td>             
-                <td>{{ vip.role }}</td> 
+                <td>{{ vip.modifiedAt | date: 'dd/MM/yyy' }}</td> 
+                <td>{{ vip.deleted | booleanToSiNo }}</td>             
             </tr>
         </tbody>
     </table>

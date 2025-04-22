@@ -1,10 +1,8 @@
 export interface User {
     id: number,
-    name: string,
-    surname: string,
-    dni: string,
+    userName: string,
+    userSurname: string,
     username: string,
     deleted: boolean,
-    deletedAt: boolean,
-    role: string
+    modifiedAt: Date
 }
