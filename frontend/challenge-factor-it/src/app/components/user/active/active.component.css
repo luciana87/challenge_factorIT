@@ -1,0 +1,36 @@
+
+
+.active-container {
+    padding: 5px 10px;
+}
+
+.active-search {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    padding: 10px;
+}
+
+.active-search input, .active-search button {
+    padding: 6px;
+}
+
+.table-active {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-active thead tr {
+    background-color: rgba(62, 196, 10, 0.349);
+}
+
+.table-active  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.table-active  tbody tr:nth-child(even) {
+    background-color: #dddddd;
+}

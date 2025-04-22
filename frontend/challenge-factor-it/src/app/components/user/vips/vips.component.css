@@ -1,0 +1,25 @@
+
+
+.vip-container {
+    padding: 5px 10px;
+}
+
+.vip-table  {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.vip-table thead tr {
+    background-color: rgba(122, 10, 196, 0.267);
+}
+
+.vip-table  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.vip-table  tbody tr:nth-child(even) {
+    background-color: #dddddd;
+}

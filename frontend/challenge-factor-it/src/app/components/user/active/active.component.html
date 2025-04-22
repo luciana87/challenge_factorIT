@@ -1,27 +1,36 @@
 
-<input type="datetime-local" [(ngModel)]="date" name="date" class="form-control" />
-<button (click)="search()">Buscar</button>
-<h3>Usuarios VIP activos</h3>
-<table >
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Username</th> 
-            <th>Eliminado</th> 
-            <th>Role</th>           
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let vip of vips">
-            <td>{{ vip.name }}</td>
-            <td>{{ vip.surname }}</td>
-            <td>{{ vip.username }}</td>
-            <td>{{ vip.deleted }}</td>             
-            <td>{{ vip.role }}</td> 
-        </tr>
-    </tbody>
-</table>
 
-<button [routerLink]="['/admin']"  value="Log In"
-class="button-login btn text-center text-white">Volver</button>
+
+<div class="active-container">
+    <h3>Usuarios VIP activos</h3>
+    <div class="active-search">
+        <input type="datetime-local" [(ngModel)]="date" name="date"  />
+        <button (click)="search()">Buscar</button>
+    </div>
+
+    <table class="table-active">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Username</th> 
+                <th>Eliminado</th> 
+                <th>Rol</th>            
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let vip of vips">
+                <td>{{ vip.name }}</td>
+                <td>{{ vip.surname }}</td>
+                <td>{{ vip.username }}</td>
+                <td>{{ vip.deleted }}</td>             
+                <td>{{ vip.role }}</td> 
+            </tr>
+        </tbody>
+    </table>
+    
+    <button [routerLink]="['/admin']" routerLinkActive="router-link-active"  value="Log In"
+    class="button-login btn btn-back">Volver</button>
+
+</div>
+    

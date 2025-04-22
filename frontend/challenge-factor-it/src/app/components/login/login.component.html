@@ -1,30 +1,13 @@
 <div id="div-bg" class=" container ">
-        <div class=" ">
-                <div class="">
-                    <h3>Bienvenido</h3>
-                    <p class="">¡Hola de nuevo! Inicia sesión para ingresar.</p>
-                </div>
-                <div class="">
-                    <div class="form-group ">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" required [(ngModel)]="username">
-                    </div>
-                    <div *ngIf="!username" class="text-danger">
-                        <small>Username es requerido.</small>
-                    </div>
-                </div>
-                <div class="">
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" required [(ngModel)]="password"
-                            (keyup.enter)="onLogin()">
-                    </div>
-                    <div *ngIf="!password" >
-                        <small class="text-danger">Password es requerido.</small>
-                    </div>
-                </div>
-
-                <button (click)="onLogin()" value="Log In"
-                    class="button-login btn text-center text-white">Ingresar</button>
+    <div class="card-login">
+        <div class="card-cabecera">
+            <h2>¡Bienvenido!</h2>
+            <h3>Inicia sesión para ingresar</h3>
         </div>
+        <form class="form2">
+            <input class="form-to-complete" type="text" name="name" id="name" placeholder="Nombre de usuario" [(ngModel)]="username">
+            <input class="form-to-complete" type="password" name="password" id="password" placeholder="Contraseña" [(ngModel)]="password">
+            <input class="form-btn-submit" type="submit" value="Ingresar" (click)="onLogin()">
+        </form>
+    </div>
 </div>

@@ -1,12 +1,66 @@
 #div-bg {
-    background-color: rgb(219, 227, 250);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    padding: 0px;
+    margin: 0px;
+    background-color: #fafaf862;
 }
 
-
-.button-login {
-    background-color: #6b6bff;
+.card-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #5274da;
+    border-radius: 6px;
+    width: 400px;
+    background-color: #dbe3fabe;
+    color: #061952;
+    box-shadow: 0px 3px 5px 0px rgba(119, 119, 119, 0.56);
 }
 
-.button-login:hover {
-    background-color: #4545e8;
+.card-cabecera {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-cabecera h2 {
+    font-size: 2rem;
+}
+
+.form2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 60px 60px 60px;
+}
+
+input {
+    padding: 20px;
+    width: 80%;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 35px !important;
+}
+
+.form-to-complete  {
+    margin-bottom: 40px;
+    color: #8d8b8b;
+    background-color: #fff;
+    border: transparent;
+}
+
+.form-btn-submit {
+    background-color: #5274da;
+    color: #fff;
+    border: #5274da;
+    box-shadow: 0px 3px 5px 0px rgba(16,78,171,0.56);
 }

@@ -1,0 +1,36 @@
+
+
+.inactive-container {
+    padding: 5px 10px;
+}
+.inactive-search {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    padding: 10px;
+}
+
+.inactive-search input, .inactive-search button {
+    padding: 6px;
+}
+
+.table-inactive {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-inactive thead tr {
+    background-color: rgba(245, 148, 168, 0.39);
+}
+
+.table-inactive  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.table-inactive  tbody tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
