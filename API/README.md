@@ -7,13 +7,13 @@ Simulación de una aplicación e-commerce que utiliza un carrito de compras impl
 - **Java**: 21
 - **Spring Boot**: 3.4.4
 - **Spring Framework**: 6.1.5
-- **Node.js**: 20.11.0
-- **Angular**: 16
 - **MySQL**: 8.0.33
 - **JPA / Hibernate**: Usado para la persistencia de datos
 
 ### Frontend
 - **Angular**: 16
+- **Node.js**: 20.11.0
+- **Bootstrap**
 
 ## Descripción del Proyecto
 
@@ -35,3 +35,73 @@ para la gestión de bases de datos en **MySQL 8.0.33**.
 ## Dependencias
 
 - **Maven**: Para la gestión de dependencias y construcción del proyecto.
+
+---
+
+### 🔐 Seguridad
+
+Este proyecto utiliza **JWT (JSON Web Tokens)** para manejar la autenticación y autorización de los usuarios.
+
+- Los usuarios deben autenticarse para obtener un token válido.
+- El token debe ser enviado en el header `Authorization` con el prefijo `Bearer` en cada solicitud protegida.
+- Los roles permiten gestionar permisos como **ADMIN ó VIP y COMMON**.
+
+---
+
+### 🧪 Diagrama de entidades de relación
+
+![DEER proyecto](Diagrama_EER_ecommerce.png)
+
+
+### 🧪 Scripts de Datos
+
+A continuación se indican las instrucciones para ejecutar los scripts SQL de carga inicial de datos. Estos scripts permiten poblar la base con usuarios, productos y fechas promocionales.
+
+#### 📌 Pasos para ejecutar los scripts
+
+1. **Crear un base de datos MySQL**:
+   ```sql
+   CREATE DATABASE IF NOT EXISTS ecommerce;
+   ```
+
+2. **Seleccionar la base de datos correspondiente**:
+   ```sql
+   USE ecommerce;
+   ```
+
+3. **Ejecutar el endpoint  `http://localhost:8080/user/create`**:
+
+   Se insertaran usuarios a la base de datos.
+
+      - **Usuarios ADMIN:**
+         **username:** admin1
+         **password:** admin1
+
+         Usuario de prueba security:
+         **username:** admin123
+         **password:** admin123
+
+      - **Usuarios VIP:**
+         **username:** uservip
+         **password:** uservip
+
+         **username:** uservip1
+         **password:** uservip1
+
+      - **Usuarios COMMON:**
+         **username:** user1
+         **password:** user1
+
+         **username:** user2
+         **password:** user2
+
+         **username:** user3
+         **password:** user3
+
+4. **Ejecutar el script llamado `scrpt_challenge.sql`**:
+
+   - `1. Inserta productos`
+   - `2. Inserta fechas especiales`
+   - `3. Inserta usuarios VIP`
+
+---
