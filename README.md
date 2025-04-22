@@ -101,8 +101,12 @@ A continuación se indican las instrucciones para ejecutar los scripts SQL de ca
 
 4. **Ejecutar el script llamado `scrpt_challenge.sql`**:
 
+   Se cargan datos iniciales.
+
    - `1. Inserta productos`
    - `2. Inserta fechas especiales`
    - `3. Inserta usuarios VIP`
+
+   [Script challenge](script_challenge.sql)
 
 ---
