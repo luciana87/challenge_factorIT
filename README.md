@@ -71,33 +71,38 @@ Este proyecto utiliza **JWT (JSON Web Tokens)** para manejar la autenticación y
 
 1. Correr la api, para que genere la base de datos.
 
-2. Ejecutar el endpoint `http://localhost:8080/user/create` desde la colección de POSTMAN.
-   
-   [Colección_POSTMAN](Challenge_factorIT_Ecommerce.postman_collection.json)
-   
-    Se insertaran usuarios a la base de datos.
+2. Ejecutar endpoint para crear usuarios en la DB desde la colección de POSTMAN.
  
-     username: admin1  
-     password* admin1  
-   
-     Usuario de prueba security:  
-     username: admin123  
-     password: admin123  
- 
-     username: user1  
-     password: user1  
-   
-     username: user2  
-     password: user2 
+  URL del endpoint: `http://localhost:8080/user/create`  
+  Método: POST  
+  Autenticación requerida: ❌ No requiere token  
+  Ejecución: colección de POSTMAN.  
     
-     username: user3  
-     password: user3  
-   
-     username: user4  
-     password: user4  
-   
-     username: user5  
-     password: user5  
+    [Colección_POSTMAN](Challenge_factorIT_Ecommerce.postman_collection.json)
+    
+     Se insertaran usuarios a la base de datos.
+  
+      username: admin1  
+      password* admin1  
+    
+      Usuario de prueba security:  
+      username: admin123  
+      password: admin123  
+  
+      username: user1  
+      password: user1  
+    
+      username: user2  
+      password: user2 
+     
+      username: user3  
+      password: user3  
+    
+      username: user4  
+      password: user4  
+    
+      username: user5  
+      password: user5  
 
 4. Ejecutar el script.sql, este script permite poblar la base con productos y fechas promocionales.
    
@@ -111,6 +116,29 @@ Este proyecto utiliza **JWT (JSON Web Tokens)** para manejar la autenticación y
 5. Correr la aplicación del frontend.
    
    comando: `ng s -o`
+
+
+## 🏷️ Simulación de actualización de usuarios VIP
+
+URL del endpoint: `http://localhost:8080/user/vip/update`  
+Método: PUT  
+Autenticación requerida: ❌ No requiere token  
+Ejecución: colección de POSTMAN.  
+
+**Descripción:**
+
+Este endpoint auxiliar permite simular la ejecución de un job mensual encargado de actualizar el rol de los usuarios según su comportamiento de compra.
+El endpoint simula lo que ocurriría automáticamente cada 1° de mes, y aplica las siguientes reglas:
+
+   - `Si un usuario supera los $10.000,00 en compras durante el mes, se convierte en VIP desde su próxima compra.`
+   - `Si un usuario ya es VIP pero no realiza compras durante el mes, pierde el rol de VIP.`
+
+**Uso principal:**
+
+Permite probar esta lógica sin esperar a la ejecución automática mensual, ideal para ambientes de desarrollo o pruebas.
+
+
+
 
 
 ---
