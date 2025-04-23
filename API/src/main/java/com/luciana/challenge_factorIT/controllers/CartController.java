@@ -5,6 +5,8 @@ import com.luciana.challenge_factorIT.dtos.requests.CartRequestDTO;
 import com.luciana.challenge_factorIT.dtos.requests.ItemRequestDTO;
 import com.luciana.challenge_factorIT.dtos.requests.ModifyItemRequestDTO;
 import com.luciana.challenge_factorIT.dtos.responses.CartDetailResponseDTO;
+import com.luciana.challenge_factorIT.dtos.responses.ItemResponseDTO;
+import com.luciana.challenge_factorIT.entities.Item;
 import com.luciana.challenge_factorIT.services.CartService;
 import com.luciana.challenge_factorIT.services.UserAuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -190,4 +192,5 @@ public class CartController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

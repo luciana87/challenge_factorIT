@@ -2,6 +2,7 @@ package com.luciana.challenge_factorIT.services;
 
 import com.luciana.challenge_factorIT.dtos.requests.ItemRequestDTO;
 import com.luciana.challenge_factorIT.dtos.requests.ModifyItemRequestDTO;
+import com.luciana.challenge_factorIT.dtos.responses.ItemResponseDTO;
 import com.luciana.challenge_factorIT.entities.Cart;
 import com.luciana.challenge_factorIT.entities.Item;
 import com.luciana.challenge_factorIT.entities.Product;
@@ -48,7 +49,7 @@ public class ItemService {
         return itemRepository.findAllItemsByCartId(cartId);
     }
 
-    private Item getItem(Long itemId) {
+    public Item getItem(Long itemId) {
         Optional<Item> optionalItem = itemRepository.findById(itemId);
         if (optionalItem.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found or doesn't exists");
@@ -75,5 +76,15 @@ public class ItemService {
 
     private Item mapToEntity(Cart cart, Product product, ItemRequestDTO itemRequestDTO) {
         return new Item(product.getPrice(), itemRequestDTO.getAmount(), product, cart);
+    }
+
+    public ItemResponseDTO mapToDTO(Item item) {
+        return new ItemResponseDTO(
+                item.getId(),
+                item.getProduct().getName(),
+                item.getProduct().getId(),
+                item.getPrice(),
+                item.getAmount()
+        );
     }
 }
