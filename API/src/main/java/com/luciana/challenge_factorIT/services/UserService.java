@@ -57,14 +57,23 @@ public class UserService{
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         List<UserEntity> users = List.of(
                 new UserEntity("Lucía", "Pérez", "34567890", "admin1", encoder.encode("admin1"), false, null, Role.ADMIN),
-                new UserEntity("Ana", "García", "12345678", "user1", encoder.encode("user1"), false, null, Role.VIP),
-                new UserEntity("Luis", "Martínez", "23456789", "user2", encoder.encode("user2"), false, null, Role.VIP),
                 new UserEntity("Carlos", "Rodríguez", "45678901", "user3", encoder.encode("user3"), false, null, Role.COMMON),
                 new UserEntity("María", "López", "56789012", "user4", encoder.encode("user4"), true, null, Role.COMMON),
                 new UserEntity("Juan", "Fernández", "67890123", "user5", encoder.encode("user5"), false, null, Role.COMMON)
         );
+        List<UserEntity> vipsUsers = List.of(
+                new UserEntity("Ana", "García", "12345678", "user1", encoder.encode("user1"), false, null, Role.VIP),
+                new UserEntity("Luis", "Martínez", "23456789", "user2", encoder.encode("user2"), false, null, Role.VIP)
+        );
 
         users.forEach(userRepository::save);
+
+        vipsUsers.forEach(vip -> {
+            userRepository.save(vip);
+            vipService.save(new Vip(vip, true));
+        });
+
+
     }
 
     public List<UserEntity> findAll() {

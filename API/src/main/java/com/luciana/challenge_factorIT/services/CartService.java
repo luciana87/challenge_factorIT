@@ -229,7 +229,7 @@ public class CartService {
                 } else {
                     vipService.save(new Vip(user, true));
                 }
-            } else if (carts.isEmpty() || isCurrentlyVip) {
+            } else if (carts.isEmpty() && isCurrentlyVip) {
                 user.setRole(Role.COMMON);
                 userService.save(user);
 
