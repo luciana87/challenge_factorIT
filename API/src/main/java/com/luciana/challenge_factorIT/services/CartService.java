@@ -149,7 +149,7 @@ public class CartService {
 
         return calculateTotal(cart, items);
     }
-    private double calculateTotal(Cart cart, List<Item> items) {
+    public double calculateTotal(Cart cart, List<Item> items) {
         int amountProducts = items.stream().mapToInt(Item::getAmount).sum();
         double totalWithoutDiscount = items.stream().mapToDouble(item -> item.getPrice() * item.getAmount()).sum();
 
