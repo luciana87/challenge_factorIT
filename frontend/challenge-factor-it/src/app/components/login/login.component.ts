@@ -16,18 +16,18 @@ import Swal from 'sweetalert2';
 export class LoginComponent {
 
   @Output() loginSuccess = new EventEmitter<void>();
- 
+
   username: string = ''
   password: string = ''
   errorMessage: string = ''
 
   constructor(private authService: AuthService, private router: Router) { }
-  onLogin () {
+  onLogin() {
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
         console.log('Login exitoso', response)
-        localStorage.setItem('token', response.token)  
-        this.loginSuccess.emit();    
+        localStorage.setItem('token', response.token)
+        this.loginSuccess.emit();
       },
       (error) => {
         Swal.fire({

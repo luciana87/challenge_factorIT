@@ -1,7 +1,9 @@
 <div *ngIf="!onLogin">
     <app-login (loginSuccess)="onLoginSuccess()"></app-login>
 </div>
-<div *ngIf="onLogin">
-    <button (click)="onLogout()">Salir</button>
+
+<div *ngIf="onLogin" class="logout-box">
+    <button (click)="onLogout()" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar
+        sesión</button>
 </div>
 <app-main *ngIf="onLogin"></app-main>
