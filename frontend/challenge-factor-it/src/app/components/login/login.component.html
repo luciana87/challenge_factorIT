@@ -1,0 +1,13 @@
+<div id="div-bg" class=" container ">
+    <div class="card-login">
+        <div class="card-cabecera">
+            <h2>¡Bienvenido!</h2>
+            <h4>Inicia sesión para ingresar</h4>
+        </div>
+        <form class="form2">
+            <input class="form-to-complete" type="text" name="name" id="name" placeholder="Nombre de usuario" [(ngModel)]="username">
+            <input class="form-to-complete" type="password" name="password" id="password" placeholder="Contraseña" [(ngModel)]="password">
+            <input class="form-btn-submit" type="submit" value="Ingresar" (click)="onLogin()">
+        </form>
+    </div>
+</div>

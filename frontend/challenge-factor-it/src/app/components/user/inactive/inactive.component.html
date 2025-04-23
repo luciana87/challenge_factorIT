@@ -1,0 +1,35 @@
+<div class="inactive-container">
+    <h3>Usuarios VIP inactivos</h3>
+    <div class="inactive-search">
+        <input type="datetime-local" [(ngModel)]="date" name="date" class="input-date" />
+        <button (click)="search()">Buscar</button>
+    </div>
+
+    <table class="table-inactive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Username</th>
+                <th>Fecha modificación</th>            
+                <th>Usuario eliminado</th>       
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let vip of vips">
+                <td>{{ vip.id }}</td>
+                <td>{{ vip.userName }}</td>
+                <td>{{ vip.userSurname }}</td>
+                <td>{{ vip.username }}</td>
+                <td>{{ vip.modifiedAt | date: 'dd/MM/yyy' }}</td> 
+                <td>{{ vip.deleted | booleanToSiNo }}</td>             
+            </tr>
+        </tbody>
+    </table>
+    
+    <button [routerLink]="['/admin']" routerLinkActive="router-link-active"  value="Log In"
+    class="button-login btn btn-back">Volver</button>
+
+</div>
+    

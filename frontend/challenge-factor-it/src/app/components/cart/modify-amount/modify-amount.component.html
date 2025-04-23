@@ -1,0 +1,11 @@
+<div class="cart-add-container">
+    <h4><i class="fa-solid fa-cart-arrow-down"></i> Edite cantidad de productos:</h4>
+    <div class="modern-row">
+        <label for="cant">Cantidad</label>
+        <input id="cant" type="number" min="1" max="20" [(ngModel)]="amount" />
+
+        <button (click)="onSubmit()"  class="btn-accept">Aceptar</button>
+        <button (click)="onCancel()"  class="btn-cancel">Cancelar</button>
+
+    </div>
+</div>

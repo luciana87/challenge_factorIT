@@ -1,0 +1,26 @@
+.dashboard-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 5px 10px;
+}
+
+.dashboar-btns-box {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+}
+
+.dashboar-btns-box button {
+    background-color: #4e6dcac2;
+    color: #fff;
+    border: #5274da;
+    padding: 5px 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.dashboar-btns-box button:hover {
+    background-color: #5274da;
+    box-shadow: 0px 3px 5px 0px rgba(119, 119, 119, 0.56);
+}

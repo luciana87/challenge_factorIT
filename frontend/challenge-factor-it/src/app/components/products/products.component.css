@@ -1,0 +1,60 @@
+.tdImg {
+    width: 5vw;
+}
+
+.imgContainer {
+    width: 5vw;
+    height: 5vw;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+img {
+    width: 5vw;
+    object-fit: cover;
+}
+
+.button-add {
+    background-color: #4545e8d3;
+}
+
+.button-add:hover {
+    background-color: #7676f4d3;
+}
+
+
+table th {
+    background-color: #6e6ef4d3;
+    color: white;
+    font-weight: 600;
+}
+
+.button-circle {
+    height: 2rem;
+    width: 2rem;
+    /* background-color: rgba(184, 184, 192, 0.952); */
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+}
+
+.button-circle-detail {
+    background-color: rgba(177, 177, 177, 0.916);
+}
+
+.button-circle-edit {
+    background-color: rgba(67, 200, 125, 0.999);
+}
+
+.button-circle-delete {
+    background-color: rgb(239, 88, 88);
+}
+
+.button-circle-activate {
+    background-color: rgb(79, 114, 255);
+}
+
+.custom-input::placeholder {
+    color: #8b8a8a;
+    font-weight: 3400;
+    font-size: 0.91em;
+}
