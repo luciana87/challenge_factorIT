@@ -10,10 +10,12 @@ import { AdminComponent } from './components/admin/admin.component';
 import { ActiveComponent } from './components/user/active/active.component';
 import { InactiveComponent } from './components/user/inactive/inactive.component';
 import { VipsComponent } from './components/user/vips/vips.component';
+import { MainComponent } from './components/shared/main/main.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent },
+    { path: '', redirectTo: '/main', pathMatch: 'full' },
+    // { path: 'login', component: LoginComponent },
+    { path: 'main', component: MainComponent },
     { path: 'home', component: HomeComponent, canActivate: [authGuard] },
     { path: 'cart/create', component: CreateCartComponent, canActivate: [authGuard] },
     { path: 'cart/:cartId/products/:productId/add', component: AddItemComponent, canActivate: [authGuard]},

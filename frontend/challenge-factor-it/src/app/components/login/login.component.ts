@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import {  HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -16,6 +15,8 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
+  @Output() loginSuccess = new EventEmitter<void>();
+ 
   username: string = ''
   password: string = ''
   errorMessage: string = ''
@@ -26,25 +27,18 @@ export class LoginComponent {
       (response) => {
         console.log('Login exitoso', response)
         localStorage.setItem('token', response.token)  
-        this.router.navigate(['/home'])      
+        this.loginSuccess.emit();    
       },
       (error) => {
-        console.error('Error al iniciar sesión.', error)
-        this.errorMessage = 'Usuario o contraseña incorrectos'
+        Swal.fire({
+          title: "¡Inicio de sesión fallido!",
+          text: "Verifica tus credenciales",
+          icon: "error"
+        }).then(() => {
+          this.username = '';
+          this.password = '';
+        });
       }
     )
   }
 }
-  // onLogin() {
-  //   const payload = {
-  //     username: this.username,
-  //     password: this.password
-  //   }
-  //   this.http.post<any>('http://localhost:8080/auth/login', payload).subscribe({
-  //     next: (response) => {
-  //       const token = response.token
-  //       localStorage.setItem('authToken', token)
-  //       console.log('Login exitoso, token guardado.')
-  //     }
-  //   })
-  // }

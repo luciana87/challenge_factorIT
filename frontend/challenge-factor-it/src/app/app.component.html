@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<div *ngIf="!onLogin">
+    <app-login (loginSuccess)="onLoginSuccess()"></app-login>
+</div>
+<div *ngIf="onLogin">
+    <button (click)="onLogout()">Salir</button>
+</div>
+<app-main *ngIf="onLogin"></app-main>
