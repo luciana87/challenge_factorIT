@@ -1,10 +1,34 @@
-<div class="cart-container">
+<!-- <div class="cart-container">
     <h3>Carrito #{{ cart.id }}</h3>
     <p>Total productos: {{ cart.totalProducts }}</p>
     <p>Total: ${{ cart.total }}</p>
     <p>Eliminado: {{ cart.deleted | booleanToSiNo}}</p>
     <p>Confirmado: {{ cart.confirmed | booleanToSiNo }}</p>
+</div> -->
+
+<div class="cart-container cart-summary-row">
+    <h3> <i class="fa-solid fa-cart-shopping"></i> Carrito N°{{ cart.id }}</h3>
+    <div class="summary-row">
+        <div class="summary-badge">
+            <span class="label">Productos:</span>
+            <span class="value">{{ cart.totalProducts }}</span>
+        </div>
+        <div class="summary-badge">
+            <span class="label">Total:</span>
+            <span class="value">${{ cart.total }}</span>
+        </div>
+        <div class="summary-badge" >
+            <span class="label">Confirmado:</span>
+            <span class="value">{{ cart.confirmed | booleanToSiNo }}</span>
+        </div>
+        <div class="summary-badge" >
+            <span class="label">Eliminado:</span>
+            <span class="value">{{ cart.deleted | booleanToSiNo }}</span>
+        </div>
+    </div>
 </div>
+
+
 
 <div class="cart-container">
     <h4>Detalle carrito </h4>
@@ -24,11 +48,15 @@
                 <td>{{ item.productId }}</td>
                 <td>{{ item.productName }}</td>
                 <td>{{ item.amount }}</td>
-                <td>${{ item.unitPrice | currency }}</td>
-                <td>
+                <td>{{ item.unitPrice | currency }}</td>
+                <td class="table-items-actions">
                     <button class="btn btn-sm " id="add-button{{ item.productId }}"
                         routerLink="/cart/{{cartId}}/item/{{item.id}}" data-toggle="tooltip" data-placement="top"
                         title="Modificar contidad"><i class="fa-solid fa-pencil"></i></button>
+
+                        <button class="btn btn-sm " id="delete-button{{ item.productId }}"
+                        (click)="delete(item)" data-toggle="tooltip" data-placement="top"
+                        title="Eliminar contidad"><i class="fa-solid fa-trash"></i></button>
                 </td>
             </tr>
         </tbody>
@@ -60,7 +88,7 @@
                 <td>
                     <button class="col-auto btn text-white btn-sm button-circle-add" id="add-button{{ product.id }}"
                         routerLink="/cart/{{cartId}}/products/{{product.id}}/add" data-toggle="tooltip"
-                        data-placement="top" title="Agregar"><i class=" fas fa-plus"></i></button>
+                        data-placement="top" title="Agregar"><i class="fa-solid fa-cart-plus fa-lg"></i></button>
             </tr>
         </tbody>
     </table>

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
+import { ItemService } from '../../services/item.service';
+import { Item } from '../../../models/Item';
 
 @Component({
   selector: 'app-modify-amount',
@@ -17,7 +19,7 @@ amount: number = 1
   itemId: number = 0
   cartId: number = 0
 
-  constructor(private router: Router, private route: ActivatedRoute, private cartService: CartService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private cartService: CartService, private itemService: ItemService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((param: ParamMap) => {
@@ -36,6 +38,16 @@ amount: number = 1
       } else {
         this.onCancel()
       }
+
+      this.itemService.getItem(this.itemId).subscribe({
+        next: (response) => {
+          this.amount = response.amount
+        },
+        error: (error) => {
+          console.error(error)
+          this.onCancel()
+        }
+      })
 
     })
   }

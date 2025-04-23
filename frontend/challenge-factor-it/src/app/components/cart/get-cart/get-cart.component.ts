@@ -67,12 +67,13 @@ export class GetCartComponent {
 
   public delete(item: Item) {
     Swal.fire({
-      title: `¿Está seguro que desea eliminar el producto ${item.productName}?`,
+
+      text: `¿Está seguro que desea eliminar el producto ${item.productName}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminar!',
+      confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
@@ -99,12 +100,12 @@ export class GetCartComponent {
 
   public confirmarCompra() {
     Swal.fire({
-      title: `¿Está seguro que desea confirmar la compra?`,
-      icon: 'warning',
+      text: `¿Está seguro que desea confirmar la compra?`,
+      icon: 'success',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, confirmar!',
+      confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
@@ -130,12 +131,12 @@ export class GetCartComponent {
 
   public eliminarCarrito() {
     Swal.fire({
-      title: `¿Está seguro que desea eliminar el carrito?`,
+      text: `¿Está seguro que desea eliminar el carrito?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, confirmar!',
+      confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
